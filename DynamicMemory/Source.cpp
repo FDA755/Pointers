@@ -8,6 +8,7 @@ using std::endl;
 #define tab "\t"
 #define delimiter "\n--------------------------------------------------------------------------------------\n"
 int** allocate(const int rows, const int cols);
+void clear(int** arr, const int rows);
 
 void FillRand(int arr[], const int n);
 void FillRand(int** arr, const int rows, const int cols);
@@ -73,7 +74,7 @@ void main()
 	cout << "Введите количество строк: "; cin >> rows;
 	cout << "Введите количество столбцов: "; cin >> cols;
 
-
+	int** arr = allocate(rows, cols);
 	FillRand(arr, rows, cols);
 	Print(arr, rows, cols);
 	cout << delimiter << endl;
@@ -100,13 +101,8 @@ void main()
 	arr = erase_row(arr, rows, cols, RowIndex);
 	Print(arr, rows, cols);
 
-	//1)Удаляем строки двумерного массива:
-	for (int i = 0; i < rows; i++)
-	{
-		delete[] arr[i];
-	}
-	//2)Удаляем массив указателей:
-	delete[] arr;
+	clear(arr, rows);
+
 #endif; 
 }
 int** allocate(const int rows, const int cols)
@@ -117,6 +113,17 @@ int** allocate(const int rows, const int cols)
 		//создаем строки двумерного массива
 		arr[i] = new int[cols];
 	}
+	return arr;
+}
+void clear(int** arr, const int rows)
+{
+	//1)Удаляем строки двумерного массива:
+	for (int i = 0; i < rows; i++)
+	{
+		delete[] arr[i];
+	}
+	//2)Удаляем массив указателей:
+	delete[] arr;
 }
 
 	void FillRand(int arr[], const int n)
