@@ -34,6 +34,8 @@ template<typename T>T** pop_row_front(T** arr, int& rows, const int cols);
 template<typename T>T** erase_row(T** arr, int& rows, const int cols, int RowIndex);
 
 template<typename T>void push_col_back(T** arr, const int rows, int& cols);
+template<typename T>void push_col_front(T** arr, const int rows, int& cols);
+template<typename T>void insert_col(T** arr, const int rows, int& cols, int ColIndex);
 
 //#define DYNAMIC_MEMORY_1
 #define DYNAMIC_MEMORY_2
@@ -111,7 +113,15 @@ void main()
 	Print(arr, rows, cols);
 	cout << delimiter << endl;
 	push_col_back(arr, rows, cols);
-	Print(arr, rows, cols);;
+	Print(arr, rows, cols);
+	cout << delimiter << endl;
+	push_col_front(arr, rows, cols);
+	Print(arr, rows, cols);
+	cout << delimiter << endl;
+	int ColIndex;
+	cout << "Введите индекс нового столбца: "; cin >> ColIndex;
+	insert_col(arr, rows, cols, ColIndex);
+	Print(arr, rows, cols);
 
 	clear(arr, rows);
 
@@ -405,11 +415,33 @@ template<typename T>void clear(T** arr, const int rows)
 	{
 		for (int i = 0; i < rows; i++)
 		{
-			T* buffer = new T[cols + 1] {};
+			/*T* buffer = new T[cols + 1] {};
 			for (int j = 0; j < cols; j++)buffer[j] = arr[i][j];
 			delete[] arr[i];
-			arr[i] = buffer;
+			arr[i] = buffer;*/
+			arr[i] = push_back(arr[i], cols, T());
+			//T() - значение по умолчанию для типа 'Т'
+			cols--;
 		}
 		cols++;
 	}
-
+	template<typename T>void push_col_front(T** arr, const int rows, int& cols)
+	{
+		for (int i = 0; i < rows; i++)
+		{
+			arr[i] = push_front(arr[i], cols, T());
+			//T() - значение по умолчанию для типа 'Т'
+			cols--;
+		}
+		cols++;
+	}
+	template<typename T>void insert_col(T** arr, const int rows, int& cols, int ColIndex)
+	{
+		for (int i = 0; i < rows; i++)
+		{
+			arr[i] = insert(arr[i], cols,T(), ColIndex);
+			//T() - значение по умолчанию для типа 'Т'
+			cols--;
+		}
+		cols++;
+	}
