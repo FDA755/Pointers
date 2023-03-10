@@ -7,6 +7,8 @@ using std::endl;
   
 #define tab "\t"
 #define delimiter "\n--------------------------------------------------------------------------------------\n"
+int** allocate(const int rows, const int cols);
+
 void FillRand(int arr[], const int n);
 void FillRand(int** arr, const int rows, const int cols);
 void Print(int arr[], const int n);
@@ -70,12 +72,7 @@ void main()
 	int cols; //количество столбцов (количество элементов строки)
 	cout << "Введите количество строк: "; cin >> rows;
 	cout << "Введите количество столбцов: "; cin >> cols;
-	int** arr = new int*[rows]; //создаем массив указателей
-	for (int i = 0; i < rows; i++)
-	{
-		//создаем строки двумерного массива
-		arr[i] = new int[cols];
-	}
+
 
 	FillRand(arr, rows, cols);
 	Print(arr, rows, cols);
@@ -112,7 +109,15 @@ void main()
 	delete[] arr;
 #endif; 
 }
-
+int** allocate(const int rows, const int cols)
+{
+	int** arr = new int* [rows]; //создаем массив указателей
+	for (int i = 0; i < rows; i++)
+	{
+		//создаем строки двумерного массива
+		arr[i] = new int[cols];
+	}
+}
 
 	void FillRand(int arr[], const int n)
 	{
